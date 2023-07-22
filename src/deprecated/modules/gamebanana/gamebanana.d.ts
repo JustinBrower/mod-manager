@@ -10,7 +10,7 @@ declare namespace Gamebanana {
         List: List;
         Section: Section;
         NewItems: any;
-        Member: any;
+        Member: Member;
         login: (apiKey?: string) => Promise<any>;
     }
 
@@ -26,7 +26,7 @@ declare namespace Gamebanana {
         constructor(req: ListRequest)
         allowedSearchItemTypes: () => Promise<string[]>;
         allowedSearchFields: (itemType: string) => Promise<string[]>;
-        list: (req: ListRequest) => Promise<any>;
+        list: (req: ListRequest) => Promise<ListResponse[]>;
         // data: () => Promise<ListResponse[]>;
     }
 
@@ -36,8 +36,14 @@ declare namespace Gamebanana {
         allowedSorts: () => Promise<any>;
         allowedFilters: () => Promise<any>;
         allowedFilterOperators: () => Promise<any>;
-        list: (req: SectionRequest) => Promise<any>;
+        list: (req: SectionRequest) => Promise<SectionResponse[]>;
         // data: () => Promise<SectionResponse[]>;
+    }
+
+    class Member {
+        constructor()
+        findByID: (userid: number) => Promise<any>;
+        findByName: (username: string) => Promise<any>;
     }
 }
 

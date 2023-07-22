@@ -1,26 +1,39 @@
-import { Client, List, Section } from 'gamebanana';
-import { BaseItemFields } from '../constants';
+import axios from 'axios';
+import { fighterIds } from '../constants';
 
-export const getItem = async (itemReq: ItemRequest) => {
-    const client = new Client();
-    const item: ItemResponse = await client.Item.getItem({ ...itemReq, fields: [...BaseItemFields, ...itemReq.fields] });
-    console.log(item)
+export const buildUrl = (req: { page: number; perPage: number; fighterId?: number; }): string => {
+    const { page, perPage } = req;
+    const baseUrl = 'http://gamebanana.com/apiv11/Mod/';
+    const url = baseUrl + `Index?_nPage=${page}` + `&_nPerpage=${perPage}` + `&_aFilters%5BGeneric_Category%5D=${req.fighterId || fighterIds.default}`;
+    return url;
 };
 
-export const getList = async (listReq: ListRequest) => {
-    const client = new Client();
-    const list = new List({ ...listReq });
-    const listData = await client.List.list({ ...listReq });
-    console.log(listData)
-    // const data = await client.List.allowedSearchFields('Game');
-    // console.log(data)
+export const buildSearchUrl = (page: number, query: string): string => {
+    const queryUrl = `http://gamebanana.com/apiv11/Util/Search/Results?_nPage=${page}&_sModelName=Mod&_sOrder=best_match&_idGameRow=6498&_sSearchString=${query}`;
+    return queryUrl;
 };
 
-export const getSection = async () => {
-    const request = { direction: 'desc', page: 1, sort: 'id', itemtype: 'Mod' };
-    const client = new Client();
-    const section = new Section({ ...request });
-    const data = await client.Section.list({ ...request });
-    console.log(data)
+export const fetch = async (url: string) => {
+    const { data } = await axios.get(url);
+    return data;
+};
 
+export const getImagesFromData = (mods: any): {imgUrl: string, id: number}[] => {
+    const imgUrls = mods.map(({ _aPreviewMedia: {_aImages}, _idRow }: any) => {
+        return {imgUrl: _aImages[0]._sBaseUrl + '/' + _aImages[0]._sFile, id: _idRow};
+    });
+    return imgUrls;
+};
+
+export const getFormattedData = (rawMods: any, images: any[]) => {
+    const mods = rawMods.map((mod: any) => {
+        const { _idRow, _sName, _sProfileUrl } = mod;
+        return {
+            id: _idRow,
+            name: _sName,
+            url: _sProfileUrl,
+            imgUrl: images.find((img) => img.id === _idRow)?.imgUrl,
+        };
+    });
+    return mods;
 };
