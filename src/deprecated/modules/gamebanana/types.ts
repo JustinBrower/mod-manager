@@ -56,15 +56,15 @@ type AllowedModItemFields =
     'Url().sUntrashUrl()' | 'Url().sUpdatesUrl()' | 'Url().sWithholdUrl()' |
     'userid' | 'views' | 'Withhold().bIsWithheld()';
 
-type AllowedGameItemFields = "blurb" | "completion" | "Count().bGameHasSubmissions()" |
-    "credits" | "date" | "developer" |
-    "development" | "full_blurb" | "full_credits" |
-    "mdate" | "name" | "Owner().name" |
-    "Preview().sStructuredDataFullsizeUrl()" | "Preview().sSubFeedImageUrl()" | "publisher" |
-    "stage" | "Trash().bIsTrashed()" | "Url().sEditUrl()" | 
-    "Url().sHistoryUrl()" | "Url().sProfileUrl()" | "Url().sTrashUrl()" |
-    "Url().sUntrashUrl()" | "Url().sWithholdUrl()" | "userid" |
-    "version" | "Withhold().bIsWithheld()";
+type AllowedGameItemFields = 'blurb' | 'completion' | 'Count().bGameHasSubmissions()' |
+    'credits' | 'date' | 'developer' |
+    'development' | 'full_blurb' | 'full_credits' |
+    'mdate' | 'name' | 'Owner().name' |
+    'Preview().sStructuredDataFullsizeUrl()' | 'Preview().sSubFeedImageUrl()' | 'publisher' |
+    'stage' | 'Trash().bIsTrashed()' | 'Url().sEditUrl()' | 
+    'Url().sHistoryUrl()' | 'Url().sProfileUrl()' | 'Url().sTrashUrl()' |
+    'Url().sUntrashUrl()' | 'Url().sWithholdUrl()' | 'userid' |
+    'version' | 'Withhold().bIsWithheld()';
 
 type AllowedItemTypes =
     'App' | 'Article' | 'ArticleCategory' |
